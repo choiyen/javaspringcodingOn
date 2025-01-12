@@ -3,7 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/codingonjava" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/springBootdefault" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/springboot-codingON" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/springboot-codingON/springBootdefault" vcs="Git" />
   </component>
 </project>

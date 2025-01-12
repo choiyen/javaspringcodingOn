@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel = "stylesheet" href="/user.css">
+    <!-- axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1> Notice List</h1>
+  <a href="/notice/new" class="bin"> 개시판 내용 등록</a>
+<table id = "noticsTable">
+    <thead>
+      <tr>
+          <th>No</th>
+          <th>title</th>
+          <th>content</th>
+          <th>writer</th>
+          <th>registered</th>
+          <th>버튼</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+    </tbody>
+</table>
+  <script>
+document.addEventListener('DOMContentLoaded', function()
+{
+    fetchUsers();
+});
+
+function fetchUsers()
+{
+    axios.get('/api/notices')
+    .then(({data}) => {
+        const notices = data;
+        console.log(notices);
+
+        const tbody = document.querySelector('#noticsTable tbody');
+        tbody.innerHTML = '';
+        notices.forEach((notice) => {
+            const row = `
+                <tr>
+                    <td>${notice.no}</td>
+                    <td>${notice.title}</td>
+                    <td>${notice.content}</td>
+                    <td>${notice.writer}</td>
+                    <td>${notice.registered}</td>
+                    <td class="action-buttons">
+                        <a href="/notices/${notice.id}/edit" class="btn">수정</a>
+                        <button onclick="deletenotice(${notice.id})" class="btn btn-danger">삭제</button>
+                    </td>
+                </tr>
+            `
+            tbody.innerHTML += row;
+        })
+    })
+    .catch((err) => {
+        console.error('Error : ', err);
+    })
+}
+
+function deletenotice(id)
+{
+    console.log(id);
+
+    if(confirm("정말로 삭제하시겠습니까?"))
+    {
+        axios.delete(`/api/notices/${id}`)
+        .then((res) => {
+                fetchUsers();
+        })
+        .catch((err) => {
+        console.error('Error : ', err);
+        })
+    }
+}
+  </script>
+</body>
+</html>
